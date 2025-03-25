@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เลือกสินค้า</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-3 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-lg font-bold">TOPUP ONLINE</h1>
+            <div class="flex space-x-4">
+                <a href="index.html" class="hover:underline">หน้าแรก</a>
+        <a href="totalGames.html" class="hover:underline">เติมเงิน</a>
+        
+        <a href="contact.html" class="hover:underline">ติดต่อเรา</a> <!-- ✅ เพิ่มลิงก์ -->
+        <a href="about.html" class="hover:underline">เกี่ยวกับเรา</a>
+            </div>
+            <div class="flex space-x-4" id="user-section">
+                <button id="login-btn" onclick="goToLogin()" class="text-white text-2xl">👤</button>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Banner -->
+    <div class="container mx-auto mt-4">
+        <div class="flex space-x-2">
+            <img src="assets/banner.jpg" class="w-1/3 h-32 object-cover rounded-lg">
+            <img src="assets/banner2.webp" class="w-1/3 h-32 object-cover rounded-lg">
+            <img src="assets/banner.jpg" class="w-1/3 h-32 object-cover rounded-lg">
+        </div>
+    </div>
+
+    <!-- รายการสินค้า -->
+    <div class="container mx-auto p-4">
+        <h2 id="game-name" class="text-lg font-bold mb-4 text-center">🔄 กำลังโหลด...</h2>
+        <div id="product-list" class="grid grid-cols-4 gap-4">
+            <!-- สินค้าจะถูกเพิ่มที่นี่ผ่าน JavaScript -->
+        </div>
+    </div>
+
+    <!-- ปุ่มดำเนินการต่อ -->
+<div class="container mx-auto text-center mt-6">
+    <button id="checkout-btn" class="bg-gray-400 text-white px-6 py-2 rounded-lg text-lg cursor-not-allowed" disabled onclick="goToCheckout()">
+        ดำเนินการต่อ
+    </button>
+</div>
+
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const gameId = urlParams.get("id");
+    console.log("🔍 กำลังโหลดสินค้าสำหรับเกม ID:", gameId); // ✅ Debug เช็คค่า
+
+if (!gameId) {
+    alert("❌ ไม่พบรหัสเกม!");
+}
+
+async function loadProducts() {
+    if (!gameId) {
+        alert("❌ ไม่พบรหัสเกม!");
+        return;
+    }
+
+    try {
+        let res = await fetch(`http://localhost:3000/products/game/${gameId}`);
+        if (!res.ok) throw new Error("โหลดสินค้าไม่สำเร็จ");
+
+        let products = await res.json();
+        console.log("📦 สินค้าที่โหลดได้:", products);
+
+        if (!Array.isArray(products) || products.length === 0) {
+            document.getElementById("product-list").innerHTML = "<p class='text-center text-gray-500'>❌ ไม่มีสินค้าในเกมนี้</p>";
+            return;
+        }
+
+        let productList = document.getElementById("product-list");
+        productList.innerHTML = "";
+        
+        products.forEach(product => {
+            let div = document.createElement("div");
+            div.className = "bg-gray-200 p-4 rounded-lg shadow-md text-center cursor-pointer hover:bg-blue-100";
+            div.innerHTML = `
+                <h3 class="text-md font-bold">${product.name}</h3>
+                <p class="text-gray-700">💰 ราคา: ${product.price} บาท</p>
+                <button class="bg-blue-500 text-white p-2 mt-2 w-full rounded" onclick="goToCheckout(${product.id})">
+                    เลือกสินค้า
+                </button>
+            `;
+            productList.appendChild(div);
+        });
+    } catch (error) {
+        console.error("❌ โหลดสินค้าไม่สำเร็จ:", error);
+        alert("❌ โหลดสินค้าไม่สำเร็จ! โปรดลองใหม่อีกครั้ง");
+    }
+}
+
+
+    function goToCheckout(productId = null) {
+        const token = localStorage.getItem("token");
+
+        if (!productId) {
+            productId = selectedProductId;
+        }
+
+        if (!productId) {
+            alert("❌ กรุณาเลือกสินค้าก่อนทำรายการ!");
+            return;
+        }
+
+        if (!token) {
+            showLoginAlert();
+            return;
+        }
+
+        window.location.href = `checkout.html?productId=${productId}`;
+    }
+
+    function showLoginAlert() {
+        let modal = document.createElement("div");
+        modal.id = "login-modal";
+        modal.innerHTML = `
+            <div class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <p class="text-lg font-bold mb-4">⚠ กรุณาเข้าสู่ระบบก่อนทำรายการ</p>
+                    <button onclick="redirectToLogin()" class="bg-blue-600 text-white px-4 py-2 rounded">ตกลง</button>
+                    <button onclick="closeLoginAlert()" class="bg-gray-400 text-white px-4 py-2 rounded ml-2">ยกเลิก</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    function closeLoginAlert() {
+        let modal = document.getElementById("login-modal");
+        if (modal) {
+            modal.remove();
+        }
+    }
+
+    function redirectToLogin() {
+        const currentUrl = window.location.href;
+        localStorage.setItem("redirectAfterLogin", currentUrl);
+        window.location.href = "login.html";
+    }
+
+    loadProducts();
+</script>
+<script src="js/auth.js"></script>
+
+</body>
+</html>

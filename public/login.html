@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+
+    <div class="bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4">เข้าสู่ระบบ</h2>
+        <input type="text" id="username" placeholder="ชื่อผู้ใช้" class="border p-2 rounded-lg w-full mb-2">
+        <input type="password" id="password" placeholder="รหัสผ่าน" class="border p-2 rounded-lg w-full mb-2">
+        <button onclick="login()" class="bg-blue-600 text-white p-2 rounded-lg w-full">เข้าสู่ระบบ</button>
+        <p class="mt-2 text-sm">ยังไม่มีบัญชี? <a href="register.html" class="text-blue-500">สมัครสมาชิก</a></p>
+    </div>
+
+    <script>
+        function login() {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.token) {
+            localStorage.setItem("token", data.token);
+            alert("✅ ล็อกอินสำเร็จ!");
+
+            // ถ้ามีหน้าเดิมที่ต้องกลับไป → กลับไปหน้าที่เลือกสินค้า
+            const redirectUrl = localStorage.getItem("redirectAfterLogin");
+            if (redirectUrl) {
+                localStorage.removeItem("redirectAfterLogin"); // ล้างค่าหลังใช้งาน
+                window.location.href = redirectUrl;
+            } else {
+                window.location.href = "index.html";
+            }
+        } else {
+            alert("❌ ล็อกอินไม่สำเร็จ! โปรดตรวจสอบชื่อผู้ใช้และรหัสผ่าน");
+        }
+    })
+    .catch(err => console.error(err));
+}
+
+    </script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

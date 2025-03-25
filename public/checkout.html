@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ชำระเงิน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-3 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-lg font-bold">TOPUP ONLINE</h1>
+            <div class="flex space-x-4">
+                <a href="index.html" class="hover:underline">หน้าแรก</a>
+                <a href="totalGames.html" class="hover:underline">เติมเงิน</a>
+                <a href="contact.html" class="hover:underline">ติดต่อเรา</a>
+                <a href="about.html" class="hover:underline">เกี่ยวกับเรา</a>
+            </div>
+            <div class="flex space-x-4" id="user-section">
+                <button id="login-btn" onclick="goToLogin()" class="text-white text-2xl">👤</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ส่วนเนื้อหาหลัก -->
+    <div class="container mx-auto p-6 bg-white rounded-lg shadow-lg mt-6">
+        <h2 class="text-xl font-bold text-center mb-4">🔔 ตรวจสอบรายละเอียดสินค้า</h2>
+        
+        <!-- รายละเอียดสินค้า -->
+        <div class="p-4 border rounded-lg bg-gray-100">
+            <p class="text-lg font-bold" id="product-name">🔄 กำลังโหลด...</p>
+            <p class="text-md text-gray-700" id="product-price">💰 ราคา: - บาท</p>
+        </div>
+
+        <!-- เลือกช่องทางการชำระเงิน -->
+        <h3 class="text-lg font-bold mt-6">💳 เลือกช่องทางการชำระเงิน</h3>
+        <div class="mt-3 space-y-2">
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" name="payment-method" value="promptpay" class="form-radio">
+                <span>QR Code (PromptPay)</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+                <input type="radio" name="payment-method" value="creditcard" class="form-radio">
+                <span>บัตรเครดิต/เดบิต</span>
+            </label>
+        </div>
+
+        <!-- ปุ่มยืนยันการชำระเงิน -->
+        <div class="text-center mt-6">
+            <button id="checkout-btn" class="bg-gray-400 text-white px-6 py-2 rounded-lg text-lg cursor-not-allowed" disabled>
+                ยืนยันการชำระเงิน
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            loadProductDetails();
+
+            // ✅ ดึงปุ่มยืนยันการชำระเงิน
+            const checkoutBtn = document.getElementById("checkout-btn");
+            const paymentMethods = document.querySelectorAll("input[name='payment-method']");
+
+            // ✅ ตรวจสอบว่าผู้ใช้เลือกช่องทางชำระเงินหรือยัง
+            paymentMethods.forEach((input) => {
+                input.addEventListener("change", function() {
+                    console.log("✅ เลือกวิธีชำระเงิน:", this.value);
+                    checkoutBtn.disabled = false; // เปิดใช้งานปุ่ม
+                    checkoutBtn.classList.remove("bg-gray-400", "cursor-not-allowed");
+                    checkoutBtn.classList.add("bg-blue-600", "hover:bg-blue-700", "cursor-pointer");
+                });
+            });
+
+            // ✅ เพิ่ม Event Listener ให้ปุ่มเพื่อไปหน้าชำระเงิน
+            checkoutBtn.addEventListener("click", goToPayment);
+        });
+
+        // ✅ ดึงข้อมูลสินค้าและแสดงในหน้าเว็บ
+        async function loadProductDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get("productId");
+
+            if (!productId) {
+                document.getElementById("product-name").innerText = "❌ ไม่พบสินค้า";
+                document.getElementById("product-price").innerText = "💰 ราคา: - บาท";
+                return;
+            }
+
+            try {
+                let res = await fetch(`http://localhost:3000/products/${productId}`);
+                if (!res.ok) throw new Error("โหลดสินค้าไม่สำเร็จ");
+
+                let product = await res.json();
+                console.log("📦 สินค้าที่ดึงมา:", product);
+
+                if (!product || Object.keys(product).length === 0) {
+                    document.getElementById("product-name").innerText = "❌ ไม่พบสินค้า";
+                    document.getElementById("product-price").innerText = "💰 ราคา: - บาท";
+                    return;
+                }
+
+                document.getElementById("product-name").innerText = product.name;
+                document.getElementById("product-price").innerText = `💰 ราคา: ${product.price} บาท`;
+            } catch (error) {
+                console.error("❌ โหลดสินค้าไม่สำเร็จ:", error);
+                alert("❌ โหลดสินค้าไม่สำเร็จ! โปรดลองใหม่อีกครั้ง");
+            }
+        }
+
+        // ✅ ฟังก์ชันสำหรับดำเนินการไปหน้าชำระเงิน
+        function goToPayment() {
+            const productId = new URLSearchParams(window.location.search).get("productId");
+            const selectedPayment = document.querySelector("input[name='payment-method']:checked");
+
+            if (!selectedPayment) {
+                alert("❌ กรุณาเลือกช่องทางการชำระเงิน!");
+                return;
+            }
+
+            // ✅ ตรวจสอบว่ามีสินค้าให้ชำระเงินหรือไม่
+            if (!productId) {
+                alert("❌ ไม่พบสินค้า กรุณากลับไปเลือกสินค้าใหม่");
+                return;
+            }
+
+            // ✅ ไปหน้าชำระเงิน
+            console.log("🔄 กำลังไปที่ payment.html");
+            window.location.href = `payment.html?productId=${productId}&method=${selectedPayment.value}`;
+        }
+
+        function goToLogin() {
+            window.location.href = "login.html";
+        }
+    </script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

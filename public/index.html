@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOPUP ONLINE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <!-- Navigation Bar -->
+<!-- Navigation Bar -->
+<nav class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+    <h1 class="text-2xl font-bold">TOPUP ONLINE</h1>
+    <div class="space-x-4">
+        <a href="index.html" class="hover:underline">หน้าแรก</a>
+        <a href="totalGames.html" class="hover:underline">เติมเงิน</a>
+        <a href="contact.html" class="hover:underline">ติดต่อเรา</a>
+        <a href="about.html" class="hover:underline">เกี่ยวกับเรา</a>
+    </div>
+    <button id="login-btn" onclick="goToLogin()" class="text-white text-2xl">👤</button>
+</nav>
+
+
+
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="assets/banner.jpg" class="w-full h-64 object-cover rounded-lg"></div>
+        <div class="swiper-slide"><img src="assets/banner2.webp" class="w-full h-64 object-cover rounded-lg"></div>
+        <div class="swiper-slide"><img src="assets/banner3.webp" class="w-full h-64 object-cover rounded-lg"></div>
+    </div>
+    <!-- ลูกศรเลื่อน -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <!-- จุดแสดงสถานะ -->
+    <div class="swiper-pagination"></div>
+</div>
+
+    <!-- โปรโมชั่น -->
+     <!-- โปรโมชั่น -->
+<div class="container mx-auto mt-6 p-4 bg-yellow-200 rounded-lg shadow-md">
+    <h2 class="text-lg font-bold mb-2">🔥 โปรโมชั่นพิเศษ 🔥</h2>
+    <ul class="list-disc pl-4">
+        <li>เติม 300 ได้ 350 ทันที! 🎉</li>
+        <li>เติมครบ 500 บาท รับโบนัสไอเทมพิเศษ 🎁</li>
+        <li>โปรเติมครั้งแรกลด 10% 🔥</li>
+    </ul>
+</div>
+
+<!-- เกมยอดนิยม -->
+<div class="container mx-auto mt-6 p-4">
+    <h2 class="text-lg font-bold mb-2">🔥 เกมยอดนิยม 🔥</h2>
+    <div class="flex space-x-4">
+        <div class="bg-blue-500 p-4 rounded-lg">
+            <img src="assets/game_3.jpg" class="w-24 h-24 rounded-lg cursor-pointer" onclick="goToGame(1)">
+            <p class="text-center text-white font-bold">ROV</p>
+        </div>
+        <div class="bg-blue-500 p-4 rounded-lg">
+            <img src="assets/game_5.jpg" class="w-24 h-24 rounded-lg cursor-pointer" onclick="goToGame(2)">
+            <p class="text-center text-white font-bold">Valorant</p>
+        </div>
+        <div class="bg-blue-500 p-4 rounded-lg">
+            <img src="assets/game_1.jpg" class="w-24 h-24 rounded-lg cursor-pointer" onclick="goToGame(3)">
+            <p class="text-center text-white font-bold">PUBG</p>
+        </div>
+    </div>
+</div>
+    <!-- รายชื่อเกม -->
+    <div class="container mx-auto p-4">
+        <div class="flex flex-col gap-4">
+            <!-- แถวแรก -->
+            <div class="bg-blue-500 p-4 rounded-lg">
+                <div class="grid grid-cols-5 gap-4">
+                    <img src="assets/game_3.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(1)">
+                    <img src="assets/game_7.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(2)">
+                    <img src="assets/game_1.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(3)">
+                    <img src="assets/game_4.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(4)">
+                    <img src="assets/game_5.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(5)">
+                </div>
+            </div>
+    
+            <!-- แถวที่สอง -->
+            <div class="bg-blue-500 p-4 rounded-lg">
+                <div class="grid grid-cols-5 gap-4">
+                    <img src="assets/LoL.png" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(6)">
+                    <img src="assets/game_8.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(7)">
+                    <img src="assets/game_6.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(8)">
+                    <img src="assets/Dota-2.png" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(9)">
+                    <img src="assets/game_9.jpg" class="w-20 h-20 rounded-lg cursor-pointer transition-transform transform hover:scale-110 hover:shadow-lg" onclick="goToGame(10)">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script>
+        function goToGame(gameId) {
+    window.location.href = `game.html?id=${gameId}`;
+}
+    
+        function goToLogin() {
+            window.location.href = "login.html";
+        }
+    
+        function checkLogin() {
+            const token = localStorage.getItem("token");
+            const userSection = document.getElementById("user-section");
+    
+            if (token) {
+                try {
+                    // Decode JWT แบบปลอดภัย
+                    const payload = JSON.parse(atob(token.split(".")[1]));
+    
+                    // แสดงชื่อผู้ใช้แทนไอคอน 👤
+                    userSection.innerHTML = `
+                        <span class="text-white font-bold">${payload.username}</span>
+                        <button onclick="logout()" class="bg-red-500 px-3 py-1 rounded-lg ml-2">ออกจากระบบ</button> `;
+                } catch (error) {
+                    console.error("❌ Token ไม่ถูกต้อง:", error);
+                    localStorage.removeItem("token"); // ลบ Token ที่ผิดพลาดออก
+                }
+            }
+        }
+    
+        function logout() {
+            localStorage.removeItem("token");
+            alert("👋 ออกจากระบบแล้ว!");
+            window.location.reload();
+        }
+    
+        checkLogin();
+
+        var swiper = new Swiper(".mySwiper", {
+        loop: true,
+        autoplay: { delay: 3000 }, // เปลี่ยนรูปอัตโนมัติทุก 3 วินาที
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+        pagination: { el: ".swiper-pagination", clickable: true },
+    });
+    </script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

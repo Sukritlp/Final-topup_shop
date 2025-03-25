@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เลือกเกมที่ต้องการเติมเงิน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-2xl font-bold">เลือกเกมที่ต้องการเติมเงิน</h1>
+        <a href="index.html" class="hover:underline">🏠 กลับหน้าแรก</a>
+    </nav>
+
+    <!-- ✅ แบนเนอร์ -->
+    <div class="w-full">
+        <img src="assets/banner2.webp" class="w-full h-60 object-cover">
+    </div>
+
+    <!-- ✅ รายการเกม -->
+    <div class="container mx-auto p-6">
+        <h2 class="text-center text-xl font-bold mb-4">🎮 กรุณาเลือกเกมที่ต้องการเติมเงิน</h2>
+
+        <div class="grid grid-cols-4 gap-6 bg-white p-6 rounded-lg shadow-lg">
+            <img src="assets/game_3.jpg" class="game-item" onclick="goToGame(1)">
+            <img src="assets/game_7.jpg" class="game-item" onclick="goToGame(2)">
+            <img src="assets/game_1.jpg" class="game-item" onclick="goToGame(3)">
+            <img src="assets/game_4.jpg" class="game-item" onclick="goToGame(4)">
+            <img src="assets/game_5.jpg" class="game-item" onclick="goToGame(5)">
+            <img src="assets/LoL.png" class="game-item" onclick="goToGame(6)">
+            <img src="assets/game_8.jpg" class="game-item" onclick="goToGame(7)">
+            <img src="assets/game_6.jpg" class="game-item" onclick="goToGame(8)">
+            <img src="assets/Dota-2.png" class="game-item" onclick="goToGame(9)">
+            <img src="assets/game_9.jpg" class="game-item" onclick="goToGame(10)">
+            <img src="assets/game_11.png" class="game-item" onclick="goToGame(11)">
+            <img src="assets/game_12.png" class="game-item" onclick="goToGame(12)">
+            <img src="assets/game_10.jpg" class="game-item" onclick="goToGame(13)">
+            <img src="assets/game_14.png" class="game-item" onclick="goToGame(14)">
+            <img src="assets/game_15.jpg" class="game-item" onclick="goToGame(15)">
+            <img src="assets/game_16.jpg" class="game-item" onclick="goToGame(16)">
+            <img src="assets/game_17.jpg" class="game-item" onclick="goToGame(17)">
+            <img src="assets/game_18.jpg" class="game-item" onclick="goToGame(18)">
+            <img src="assets/game_19.png" class="game-item" onclick="goToGame(19)">
+            <img src="assets/game_20.jpg" class="game-item" onclick="goToGame(20)">
+        </div>
+    </div>
+
+    <script>
+        function goToGame(gameId) {
+            window.location.href = `game.html?id=${gameId}`;
+        }
+    </script>
+
+    <style>
+        .game-item {
+            width: 100px;
+            height: 100px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .game-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+</body>
+</html>

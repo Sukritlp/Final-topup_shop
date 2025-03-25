@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- ใช้ Tailwind CSS -->
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-2xl font-bold">👑 Admin Panel</h1>
+        <button onclick="logout()" class="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-700">ออกจากระบบ</button>
+    </nav>
+
+    <div class="container mx-auto p-6">
+        <!-- กล่องควบคุม -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            
+            <!-- เพิ่มสินค้า -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">📦 เพิ่มสินค้า</h2>
+                <input type="text" id="game_id" placeholder="Game ID" class="w-full p-2 border rounded-lg mb-2">
+                <input type="text" id="name" placeholder="ชื่อสินค้า" class="w-full p-2 border rounded-lg mb-2">
+                <input type="number" id="price" placeholder="ราคา" class="w-full p-2 border rounded-lg mb-4">
+                <button onclick="addProduct()" class="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700">
+                    ➕ เพิ่มสินค้า
+                </button>
+            </div>
+
+            <!-- ลบสินค้า -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">🗑️ ลบสินค้า</h2>
+                <input type="number" id="delete_id" placeholder="Product ID" class="w-full p-2 border rounded-lg mb-4">
+                <button onclick="deleteProduct()" class="w-full bg-red-600 text-white p-2 rounded-lg hover:bg-red-700">
+                    ❌ ลบสินค้า
+                </button>
+            </div>
+
+            <!-- รายการคำสั่งซื้อ -->
+            <div class="bg-white p-6 rounded-lg shadow-md col-span-2">
+                <h2 class="text-lg font-semibold text-gray-700 mb-4">📜 รายการสั่งซื้อ</h2>
+                <button onclick="loadOrders()" class="bg-green-600 text-white p-2 rounded-lg hover:bg-green-700 mb-4">
+                    🔄 โหลดคำสั่งซื้อ
+                </button>
+                <ul id="order-list" class="bg-gray-50 p-4 rounded-lg border"></ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- โหลด JavaScript -->
+    <script src="js/admin.js"></script>
+    <script src="js/auth.js"></script>
+
+</body>
+</html>
